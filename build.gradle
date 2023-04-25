@@ -25,8 +25,8 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 version = "1.7.10-0.3"
-group= "com.cat.catmod"
-archivesBaseName = "Catmod"
+group= "fr.iamacat.mycoordinatesmods"
+archivesBaseName = "My Coordinates Mods"
 
 minecraft {
     version = project.minecraft_version + "-" + project.forge_version

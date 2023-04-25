@@ -1,4 +1,4 @@
-package fr.iamacat.catmod;
+package fr.iamacat.mycoordinatesmods;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -6,30 +6,18 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import fr.iamacat.catmod.init.*;
-import fr.iamacat.catmod.proxy.CommonProxy;
-import fr.iamacat.catmod.utils.CatTab;
-import fr.iamacat.catmod.utils.Reference;
-import fr.iamacat.catmod.worldgen.oregen.CatOreGen;
-import net.minecraft.creativetab.CreativeTabs;
+import fr.iamacat.mycoordinatesmods.proxy.CommonProxy;
+import fr.iamacat.mycoordinatesmods.utils.Reference;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, acceptedMinecraftVersions = Reference.MC_VERSION)
-public class Catmod {
+public class MyCoordinatesMods {
     @Mod.Instance(Reference.MOD_ID)
-    public static Catmod instance;
+    public static MyCoordinatesMods instance;
     @SidedProxy(clientSide = Reference.CLIENT_PROXY, serverSide = Reference.SERVER_PROXY)
     public static CommonProxy proxy;
 
-    public static CreativeTabs catTab = new CatTab("catTab");
-
     @Mod.EventHandler
     public static void preInit(FMLPreInitializationEvent event) {
-        RegisterItems.init();
-        RegisterItems.register();
-        RegisterBlocks.init();
-        RegisterBlocks.register();
-        GameRegistry.registerWorldGenerator(new CatOreGen(), 0);
-        RegisterBiomes.init();
     }
     public static class WorldLoadHandler {
 
@@ -43,7 +31,5 @@ public class Catmod {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         proxy.registerRenders();
-        RegisterEntity.init();
-        GameRegistry.registerFuelHandler(new RegisterFuel());
         }
     }
