@@ -21,3 +21,9 @@
 * add a config file to disabling one by one text and change color
 
 * add a keybind to disabling the UI
+* 
+# Discord
+
+Add me on discord : I'm A Cat[FR]#7202
+
+Discord server : https://discord.gg/ZnmHKJzKkZ
