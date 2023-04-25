@@ -8,11 +8,11 @@
 
 # Links to descriptions of my projects.
 
-[*Modrinth*]()
+[*Modrinth*](https://modrinth.com/my-coordinates-mod)
 
 [*Github*](https://github.com/quentin452/MyCoordinatesMod)
 
-[*Curseforge*]()
+[*Curseforge*](https://legacy.curseforge.com/minecraft/mc-mods/my-coordinates-mod)
 
 # Todo
 
