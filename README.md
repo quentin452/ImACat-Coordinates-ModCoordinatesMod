@@ -1,9 +1,19 @@
-This mod adds an item to your Minecraft world called CatCoin. This coin can be used to craft various items, adding a new layer of depth to your gameplay experience. With CatCoin, you can craft items such as weapons, armor, tools, food, and more. It adds an extra layer of challenge and complexity to your modpack, and gives you the opportunity to make use of your creativity. With CatCoin, you can craft items faster, more efficiently, and more effectively, making it easier to build whatever you need. Furthermore, it adds a sense of accomplishment when you complete a crafting task, as you can show off the results of your efforts with your friends. CatCoin adds a unique element to your modpack, providing a way to make crafting more rewarding and enjoyable. With its simple and intuitive user interface, CatCoin makes crafting easier and more enjoyable for everyone.
+# Description
 
-- Links to descriptions of my projects.
+A lightweight Mod that Show coordinates,cardinal points and fps in game
+Can be totaly disabled via keybind(WIP)
+Can disabling one by one coordinates,cardinal points and fps + Change colors in configs(WIP)
+
+# Links to descriptions of my projects.
 
 [*Modrinth*]()
 
 [*Github*]()
 
 [*Curseforge*]()
+
+# Todo
+
+add ingame config
+add a config file to disabling one by one text and change color
+add a keybind to disabling the UI
