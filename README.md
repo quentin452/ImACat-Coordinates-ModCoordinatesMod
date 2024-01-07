@@ -1,10 +1,10 @@
 # Description
 
-* A lightweight Mod that Show coordinates,cardinal points and fps in game
+* A lightweight Mod that Shows coordinates, cardinal points and fps in game
 
-* Can be totaly disabled via keybind(WIP)
+* Can be totally disabled via keybinding(WIP)
 
-* Can disabling one by one coordinates,cardinal points and fps + Change colors in configs(WIP)
+* Can disable one by one coordinates, cardinal points and fps + Change colors in configs(WIP)
 
 # Links to descriptions of my projects.
 
@@ -16,14 +16,12 @@
 
 # Todo
 
-* add ingame config
+* add a config file to disable one by one text and change color
 
-* add a config file to disabling one by one text and change color
-
-* add a keybind to disabling the UI
+* add a keybinding to disabling the UI
 
 # Discord
 
-Add me on discord : I'm A Cat[FR]#7202
+Add me on discord: I'm A Cat[FR]#7202
 
 Discord server : https://discord.gg/ZnmHKJzKkZ

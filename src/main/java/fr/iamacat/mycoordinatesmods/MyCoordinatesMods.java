@@ -8,6 +8,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
+import fr.iamacat.mycoordinatesmods.config.CoordinatesConfig;
 import fr.iamacat.mycoordinatesmods.proxy.CommonProxy;
 import fr.iamacat.mycoordinatesmods.utils.Reference;
 import net.minecraft.client.Minecraft;
@@ -30,7 +31,7 @@ public class MyCoordinatesMods {
 
     @Mod.EventHandler
     public static void preInit(FMLPreInitializationEvent event) {
-        System.out.println("MyCoordinatesMods loaded successfully.");
+        CoordinatesConfig.setupAndLoad(event);
     }
 
     @Mod.EventHandler
@@ -53,17 +54,37 @@ public class MyCoordinatesMods {
         if (showCoordinates && !Minecraft.getMinecraft().gameSettings.showDebugInfo && Minecraft.getMinecraft().currentScreen == null) {
             Minecraft minecraft = Minecraft.getMinecraft();
             FontRenderer fontRenderer = minecraft.fontRenderer;
-            String x = String.format("%.2f", minecraft.thePlayer.posX);
-            String y = String.format("%.2f", minecraft.thePlayer.posY);
-            String z = String.format("%.2f", minecraft.thePlayer.posZ);
-            char facing = getCardinalPoint(minecraft.thePlayer.rotationYaw);
-            List<String> coordinates = Arrays.asList("X: " + x, "Y: " + y, "Z: " + z, "Facing: " + facing, "FPS: " + minecraft.debug.split(" ")[0]);
+
             int yCoord = 10;
-            for (String coord : coordinates) {
-                fontRenderer.drawString(coord, 10, yCoord, 0xFFFFFF);
+
+            if (!CoordinatesConfig.disableXCoord) {
+                String x = String.format("%.2f", minecraft.thePlayer.posX);
+                fontRenderer.drawString("X: " + x, 10, yCoord, 0xFFFFFF);
                 yCoord += 10;
             }
-            System.out.println("onRenderGameOverlay called");
+
+            if (!CoordinatesConfig.disableYCoord) {
+                String y = String.format("%.2f", minecraft.thePlayer.posY);
+                fontRenderer.drawString("Y: " + y, 10, yCoord, 0xFFFFFF);
+                yCoord += 10;
+            }
+
+            if (!CoordinatesConfig.disableZCoord) {
+                String z = String.format("%.2f", minecraft.thePlayer.posZ);
+                fontRenderer.drawString("Z: " + z, 10, yCoord, 0xFFFFFF);
+                yCoord += 10;
+            }
+
+            if (!CoordinatesConfig.disableFacing) {
+                char facing = getCardinalPoint(minecraft.thePlayer.rotationYaw);
+                fontRenderer.drawString("Facing: " + facing, 10, yCoord, 0xFFFFFF);
+                yCoord += 10;
+            }
+
+            if (!CoordinatesConfig.disableFPSCounter) {
+                String fps = minecraft.debug.split(" ")[0];
+                fontRenderer.drawString("FPS: " + fps, 10, yCoord, 0xFFFFFF);
+            }
         }
     }
     @SubscribeEvent
@@ -82,4 +103,4 @@ public class MyCoordinatesMods {
         int index = Math.round(yaw / 45f) & 7;
         return cardinalPoints[index].charAt(0);
     }
-    }
+}
