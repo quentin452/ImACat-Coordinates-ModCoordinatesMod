@@ -9,6 +9,7 @@ import fr.iamacat.mycoordinatesmods.MyCoordinatesMods;
 import fr.iamacat.mycoordinatesmods.config.CoordinatesConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -35,36 +36,32 @@ public class CoordinatesEventHandler {
         Minecraft minecraft = Minecraft.getMinecraft();
         if (showCoordinates && !minecraft.gameSettings.showDebugInfo && minecraft.currentScreen == null) {
             FontRenderer fontRenderer = minecraft.fontRenderer;
-
-            int yCoord = 10;
-
+            ScaledResolution scaledResolution = new ScaledResolution(minecraft, minecraft.displayWidth, minecraft.displayHeight);
+            int xCoord = 2;
+            int yCoord = scaledResolution.getScaledHeight() - 10;
             if (!CoordinatesConfig.disableXCoord) {
                 String x = String.format("%.2f", minecraft.thePlayer.posX);
-                fontRenderer.drawString("X: " + x, 10, yCoord, 0xFFFFFF);
-                yCoord += 10;
+                fontRenderer.drawString("X: " + x, xCoord, yCoord, 0xFFFFFF);
+                yCoord -= 10;
             }
-
             if (!CoordinatesConfig.disableYCoord) {
                 String y = String.format("%.2f", minecraft.thePlayer.posY);
-                fontRenderer.drawString("Y: " + y, 10, yCoord, 0xFFFFFF);
-                yCoord += 10;
+                fontRenderer.drawString("Y: " + y, xCoord, yCoord, 0xFFFFFF);
+                yCoord -= 10;
             }
-
             if (!CoordinatesConfig.disableZCoord) {
                 String z = String.format("%.2f", minecraft.thePlayer.posZ);
-                fontRenderer.drawString("Z: " + z, 10, yCoord, 0xFFFFFF);
-                yCoord += 10;
+                fontRenderer.drawString("Z: " + z, xCoord, yCoord, 0xFFFFFF);
+                yCoord -= 10;
             }
-
             if (!CoordinatesConfig.disableFacing) {
                 char facing = getCardinalPoint(minecraft.thePlayer.rotationYaw);
-                fontRenderer.drawString("Facing: " + facing, 10, yCoord, 0xFFFFFF);
-                yCoord += 10;
+                fontRenderer.drawString("Facing: " + facing, xCoord, yCoord, 0xFFFFFF);
+                yCoord -= 10;
             }
-
             if (!CoordinatesConfig.disableFPSCounter) {
                 String fps = minecraft.debug.split(" ")[0];
-                fontRenderer.drawString("FPS: " + fps, 10, yCoord, 0xFFFFFF);
+                fontRenderer.drawString("FPS: " + fps, xCoord, yCoord, 0xFFFFFF);
             }
         }
     }
