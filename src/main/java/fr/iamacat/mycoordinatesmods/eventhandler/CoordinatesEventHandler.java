@@ -1,5 +1,8 @@
 package fr.iamacat.mycoordinatesmods.eventhandler;
 
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import fr.iamacat.mycoordinatesmods.MyCoordinatesMods;
@@ -8,16 +11,18 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Keyboard;
 
 public class CoordinatesEventHandler {
+    static KeyBinding toggleKeyBinding;
     private boolean showCoordinates = true;
     private long lastToggleTime;
     private static final long TOGGLE_DELAY = 100; // ms
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
-        if (Keyboard.isKeyDown(MyCoordinatesMods.toggleKeyBinding.getKeyCode()) && System.currentTimeMillis() > lastToggleTime + TOGGLE_DELAY) {
+        if (Keyboard.isKeyDown(toggleKeyBinding.getKeyCode()) && System.currentTimeMillis() > lastToggleTime + TOGGLE_DELAY) {
             lastToggleTime = System.currentTimeMillis();
             showCoordinates = !showCoordinates;
             Minecraft.getMinecraft().ingameGUI.getChatGUI().refreshChat();
@@ -69,5 +74,13 @@ public class CoordinatesEventHandler {
     private char getCardinalPoint(float yaw) {
         int index = Math.round(yaw / 45f) & 7;
         return cardinalPoints[index].charAt(0);
+    }
+
+    public static void init(FMLInitializationEvent event) {
+        KeyBinding[] keyBindings = {
+                new KeyBinding("Toggle Coordinates", Keyboard.KEY_T, "IamacatCoordinatesMod")
+        };
+        toggleKeyBinding = keyBindings[0];
+        ClientRegistry.registerKeyBinding(toggleKeyBinding);
     }
 }
