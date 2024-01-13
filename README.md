@@ -22,6 +22,6 @@
 
 # Discord
 
-Add me on discord: I'm A Cat[FR]#7202
+Add me on discord: imacatfr
 
 Discord server : https://discord.gg/ZnmHKJzKkZ
