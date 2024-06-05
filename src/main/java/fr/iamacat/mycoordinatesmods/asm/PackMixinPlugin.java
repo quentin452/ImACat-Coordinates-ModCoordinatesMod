@@ -14,7 +14,7 @@ import lombok.Getter;
 public class PackMixinPlugin implements IMixinPlugin {
 
     @Getter
-    private final Logger logger = IMixinPlugin.createLogger("BiggessPackTweak");
+    private final Logger logger = IMixinPlugin.createLogger("My Coordinates Mod");
 
     public PackMixinPlugin() {
         try {
