@@ -21,9 +21,7 @@
 # Todo
 
 * add a config file to disable one by one text and change color
-
-* add a keybinding to disabling the UI
-
+* 
 # Discord
 
 Add me on discord: imacatfr
