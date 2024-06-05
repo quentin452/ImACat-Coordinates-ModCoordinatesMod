@@ -18,7 +18,7 @@ public class CoordinatesEventHandler {
             return;
         }
         Minecraft minecraft = Minecraft.getMinecraft();
-        if (showCoordinates) {
+        if (showCoordinates && !minecraft.gameSettings.showDebugInfo ) {
             FontRenderer fontRenderer = minecraft.fontRenderer;
             ScaledResolution scaledResolution = event.resolution;
             int xCoord, yCoord;
