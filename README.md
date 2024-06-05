@@ -2,9 +2,13 @@
 
 * A lightweight Mod that Shows coordinates, cardinal points and fps in game
 
-* Can be totally disabled via keybinding(WIP)
-
 * Can disable one by one coordinates, cardinal points and fps + Change colors in configs(WIP)
+
+# Requirement
+
+[Unimixins](https://legacy.curseforge.com/minecraft/mc-mods/unimixins/files/4600285)
+
+[FalsePatternLib](https://legacy.curseforge.com/minecraft/mc-mods/fplib/files/4701057)
 
 # Links to descriptions of my projects.
 

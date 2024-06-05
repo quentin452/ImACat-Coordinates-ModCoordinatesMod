@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8.5-GTNH",
+  "package": "fr.iamacat.mycoordinatesmods.mixins",
+  "plugin": "fr.iamacat.mycoordinatesmods.asm.PackMixinPlugin", 
+  "refmap": "mixins.mycroordinatesmods.refmap.json",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [],
+  "client": [],
+  "server": []
+}

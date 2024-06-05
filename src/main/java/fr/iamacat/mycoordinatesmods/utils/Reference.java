@@ -1,6 +1,7 @@
 package fr.iamacat.mycoordinatesmods.utils;
 
 public class Reference {
+
     public static final String MOD_ID = "mycroordinatesmods";
     public static final String MOD_NAME = "My Coordinates Mods";
     public static final String MOD_VERSION = "1.0";

@@ -1,5 +1,7 @@
 package fr.iamacat.mycoordinatesmods;
 
+import net.minecraftforge.common.MinecraftForge;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -9,12 +11,15 @@ import fr.iamacat.mycoordinatesmods.config.CoordinatesConfig;
 import fr.iamacat.mycoordinatesmods.eventhandler.CoordinatesEventHandler;
 import fr.iamacat.mycoordinatesmods.proxy.CommonProxy;
 import fr.iamacat.mycoordinatesmods.utils.Reference;
-import net.minecraftforge.common.MinecraftForge;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION, acceptedMinecraftVersions = Reference.MC_VERSION)
+@Mod(
+    modid = Reference.MOD_ID,
+    name = Reference.MOD_NAME,
+    version = Reference.MOD_VERSION,
+    acceptedMinecraftVersions = Reference.MC_VERSION)
 public class MyCoordinatesMods {
-    private CoordinatesEventHandler handler;
 
+    private CoordinatesEventHandler handler;
 
     private boolean showCoordinates = true;
     @Mod.Instance(Reference.MOD_ID)
@@ -27,10 +32,9 @@ public class MyCoordinatesMods {
         CoordinatesConfig.setupAndLoad(event);
     }
 
-
     @Mod.EventHandler
-    public void init(FMLInitializationEvent event) {
-    }
+    public void init(FMLInitializationEvent event) {}
+
     @Mod.EventHandler
     public static void postInit(FMLPostInitializationEvent event) {
         CoordinatesEventHandler.init(event);

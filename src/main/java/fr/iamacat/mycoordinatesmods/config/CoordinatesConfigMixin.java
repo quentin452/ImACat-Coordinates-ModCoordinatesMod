@@ -1,0 +1,15 @@
+package fr.iamacat.mycoordinatesmods.config;
+
+import com.falsepattern.lib.config.Config;
+
+import fr.iamacat.mycoordinatesmods.Tags;
+
+@Config(modid = Tags.MODID)
+public class CoordinatesConfigMixin {
+
+    @Config.Comment("Disabling Teleporter wand from Farlanders causing infinite loop (https://github.com/quentin452/privates-minecraft-modpack/issues/917)")
+    @Config.DefaultBoolean(true)
+    @Config.RequiresWorldRestart
+    public static boolean enableMixinItemMysticWandTeleport;
+
+}

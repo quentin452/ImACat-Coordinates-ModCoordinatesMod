@@ -1,13 +1,14 @@
 package fr.iamacat.mycoordinatesmods.config;
 
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import fr.iamacat.mycoordinatesmods.utils.Reference;
-import net.minecraftforge.common.config.ConfigCategory;
-import net.minecraftforge.common.config.Configuration;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import net.minecraftforge.common.config.ConfigCategory;
+import net.minecraftforge.common.config.Configuration;
+
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import fr.iamacat.mycoordinatesmods.utils.Reference;
 
 public class CoordinatesConfig {
 
@@ -20,6 +21,7 @@ public class CoordinatesConfig {
     public static boolean disableZCoord;
     public static boolean disableFacing;
     public static String hudPosition;
+
     private static void setupCategories() {
         CATEOGY_BIOMES = makeCategory("all");
     }
@@ -45,11 +47,15 @@ public class CoordinatesConfig {
         disableYCoord = config.get(CATEOGY_BIOMES, "Disable Y Coordinates Calculation?", false)
             .getBoolean();
         disableZCoord = config.get(CATEOGY_BIOMES, "Disable Z Coordinates Calculation?", false)
-                .getBoolean();
+            .getBoolean();
         disableFacing = config.get(CATEOGY_BIOMES, "Disable Facing Calculation?", false)
-                .getBoolean();
-        hudPosition = config.get(CATEOGY_BIOMES, "HUD Position(Possible config : top_left , top_right , bottom_left , bottom_right)", "top_right")
-                .getString();
+            .getBoolean();
+        hudPosition = config
+            .get(
+                CATEOGY_BIOMES,
+                "HUD Position(Possible config : top_left , top_right , bottom_left , bottom_right)",
+                "top_right")
+            .getString();
         if (config.hasChanged()) {
             config.save();
         }
