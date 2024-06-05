@@ -12,7 +12,7 @@
 
 # Links to descriptions of my projects.
 
-[*Modrinth*](https://modrinth.com/my-coordinates-mod)
+[*Modrinth*](https://modrinth.com/mod/my-coordinates-mod)
 
 [*Github*](https://github.com/quentin452/MyCoordinatesMod)
 
