@@ -19,6 +19,7 @@ public class CoordinatesConfig {
     public static boolean disableYCoord;
     public static boolean disableZCoord;
     public static boolean disableFacing;
+    public static String hudPosition;
     private static void setupCategories() {
         CATEOGY_BIOMES = makeCategory("all");
     }
@@ -47,6 +48,8 @@ public class CoordinatesConfig {
                 .getBoolean();
         disableFacing = config.get(CATEOGY_BIOMES, "Disable Facing Calculation?", false)
                 .getBoolean();
+        hudPosition = config.get(CATEOGY_BIOMES, "HUD Position(Possible config : top_left , top_right , bottom_left , bottom_right)", "top_right")
+                .getString();
         if (config.hasChanged()) {
             config.save();
         }
