@@ -34,7 +34,7 @@ public class CoordinatesConfig {
     }
 
     public static void setupAndLoad(FMLPreInitializationEvent event) {
-        config = new Configuration(new File(event.getModConfigurationDirectory(), "iamacatcoordinates.cfg"));
+        config = new Configuration(new File(event.getModConfigurationDirectory(), "mycroordinatesmods_nomixins.cfg"));
         setupCategories();
         load();
     }

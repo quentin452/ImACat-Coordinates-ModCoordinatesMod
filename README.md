@@ -34,5 +34,5 @@ Discord server : https://discord.gg/ZnmHKJzKkZ
 
 the mod contains two configs since V0.3
 
-iamacatcoordinates.cfg (For general config)
+mycroordinatesmods_nomixins.cfg (For general config)
 mycroordinatesmods.cfg (For Mixin config, not recommended to change these configs)
