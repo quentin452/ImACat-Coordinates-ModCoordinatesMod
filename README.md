@@ -21,7 +21,7 @@
 # Todo
 
 * add a config file to disable one by one text and change color
-* 
+ 
 # Discord
 
 Add me on discord: imacatfr
