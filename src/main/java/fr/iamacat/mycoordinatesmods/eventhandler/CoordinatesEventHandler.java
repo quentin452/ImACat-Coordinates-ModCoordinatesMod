@@ -1,19 +1,14 @@
 package fr.iamacat.mycoordinatesmods.eventhandler;
 
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
 import fr.iamacat.mycoordinatesmods.config.CoordinatesConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.input.Keyboard;
 
 public class CoordinatesEventHandler {
@@ -25,7 +20,7 @@ public class CoordinatesEventHandler {
         Minecraft minecraft = Minecraft.getMinecraft();
         if (showCoordinates && !minecraft.gameSettings.showDebugInfo && minecraft.currentScreen == null) {
             FontRenderer fontRenderer = minecraft.fontRenderer;
-            ScaledResolution scaledResolution = new ScaledResolution(minecraft, minecraft.displayWidth, minecraft.displayHeight);
+            ScaledResolution scaledResolution = event.resolution;
             int xCoord = 2;
             int yCoord = scaledResolution.getScaledHeight() - 10;
             if (!CoordinatesConfig.disableXCoord) {
