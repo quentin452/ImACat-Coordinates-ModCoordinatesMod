@@ -27,13 +27,13 @@ public class MyCoordinatesMods {
         CoordinatesConfig.setupAndLoad(event);
     }
 
-    @Mod.EventHandler
-    public static void postInit(FMLPostInitializationEvent event) {
-    }
+
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
+    }
+    @Mod.EventHandler
+    public static void postInit(FMLPostInitializationEvent event) {
         CoordinatesEventHandler.init(event);
-        handler = new CoordinatesEventHandler();
-        MinecraftForge.EVENT_BUS.register(handler);
+        MinecraftForge.EVENT_BUS.register(new CoordinatesEventHandler());
     }
 }

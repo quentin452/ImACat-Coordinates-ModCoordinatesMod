@@ -1,11 +1,12 @@
 package fr.iamacat.mycoordinatesmods.eventhandler;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
-import fr.iamacat.mycoordinatesmods.MyCoordinatesMods;
 import fr.iamacat.mycoordinatesmods.config.CoordinatesConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -18,19 +19,7 @@ import org.lwjgl.input.Keyboard;
 public class CoordinatesEventHandler {
     static KeyBinding toggleKeyBinding;
     private boolean showCoordinates = true;
-    private long lastToggleTime;
-    private static final long TOGGLE_DELAY = 100; // ms
 
-    @SubscribeEvent
-    public void onTick(TickEvent.PlayerTickEvent event) {
-        if (Keyboard.isKeyDown(toggleKeyBinding.getKeyCode()) && System.currentTimeMillis() > lastToggleTime + TOGGLE_DELAY) {
-            lastToggleTime = System.currentTimeMillis();
-            showCoordinates = !showCoordinates;
-            Minecraft.getMinecraft().ingameGUI.getChatGUI().refreshChat();
-            Minecraft.getMinecraft().ingameGUI.getChatGUI().refreshChat();
-            System.out.println("Toggle Coordinates key pressed. showCoordinates = " + showCoordinates);
-        }
-    }
     @SubscribeEvent
     public void onRenderGameOverlay(RenderGameOverlayEvent.Text event) {
         Minecraft minecraft = Minecraft.getMinecraft();
@@ -73,7 +62,7 @@ public class CoordinatesEventHandler {
         return cardinalPoints[index].charAt(0);
     }
 
-    public static void init(FMLInitializationEvent event) {
+    public static void init(FMLPostInitializationEvent event) {
         KeyBinding[] keyBindings = {
                 new KeyBinding("Toggle Coordinates", Keyboard.KEY_T, "IamacatCoordinatesMod")
         };
