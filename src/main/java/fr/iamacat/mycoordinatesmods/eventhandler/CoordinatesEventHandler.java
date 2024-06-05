@@ -3,20 +3,14 @@ package fr.iamacat.mycoordinatesmods.eventhandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
-import org.lwjgl.input.Keyboard;
-
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import fr.iamacat.mycoordinatesmods.config.CoordinatesConfig;
 
 public class CoordinatesEventHandler {
 
-    static KeyBinding toggleKeyBinding;
-    private boolean showCoordinates = true;
+    public static boolean showCoordinates = true;
 
     @SubscribeEvent
     public void onRenderGameOverlay(RenderGameOverlayEvent.Text event) {
@@ -79,11 +73,5 @@ public class CoordinatesEventHandler {
     private char getCardinalPoint(float yaw) {
         int index = Math.round(yaw / 45f) & 7;
         return cardinalPoints[index].charAt(0);
-    }
-
-    public static void init(FMLPostInitializationEvent event) {
-        KeyBinding[] keyBindings = { new KeyBinding("Toggle Coordinates", Keyboard.KEY_T, "IamacatCoordinatesMod") };
-        toggleKeyBinding = keyBindings[0];
-        ClientRegistry.registerKeyBinding(toggleKeyBinding);
     }
 }

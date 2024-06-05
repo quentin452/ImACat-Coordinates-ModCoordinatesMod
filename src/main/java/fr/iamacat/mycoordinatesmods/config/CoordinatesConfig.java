@@ -14,13 +14,14 @@ public class CoordinatesConfig {
 
     public static Configuration config;
     private static final List<ConfigCategory> allCategories = new ArrayList();
-    private static String CATEOGY_BIOMES;
+    public static String CATEOGY_BIOMES;
     public static boolean disableFPSCounter;
     public static boolean disableXCoord;
     public static boolean disableYCoord;
     public static boolean disableZCoord;
     public static boolean disableFacing;
     public static String hudPosition;
+    public static String _Position;
 
     private static void setupCategories() {
         CATEOGY_BIOMES = makeCategory("all");
@@ -40,6 +41,7 @@ public class CoordinatesConfig {
     }
 
     public static void load() {
+        _Position = "top_right";
         disableFPSCounter = config.get(CATEOGY_BIOMES, "Disable FPS Counter???", false)
             .getBoolean();
         disableXCoord = config.get(CATEOGY_BIOMES, "Disable X Coordinates Calculation?", false)
@@ -54,7 +56,7 @@ public class CoordinatesConfig {
             .get(
                 CATEOGY_BIOMES,
                 "HUD Position(Possible config : top_left , top_right , bottom_left , bottom_right)",
-                "top_right")
+                _Position)
             .getString();
         if (config.hasChanged()) {
             config.save();

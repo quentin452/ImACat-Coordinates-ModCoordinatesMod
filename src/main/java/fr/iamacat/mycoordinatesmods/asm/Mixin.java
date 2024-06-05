@@ -6,18 +6,14 @@ import java.util.function.Predicate;
 import com.falsepattern.lib.mixin.IMixin;
 import com.falsepattern.lib.mixin.ITargetedMod;
 
-import cpw.mods.fml.relauncher.Side;
+import fr.iamacat.mycoordinatesmods.config.CoordinatesConfigMixin;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum Mixin implements IMixin {
 
-    // TWEAKING MIXINS
-    // common_farlanders_MixinItemMysticWandTeleport(Side.COMMON,
-    // require(TargetedMod.FARLANDERS).and(m -> BiggessPackTweakConfig.enableMixinItemMysticWandTeleport),
-    // "farlanders.MixinItemMysticWandTeleport")
-
+    client_MixinPlayerTick(Side.CLIENT, m -> CoordinatesConfigMixin.enableInputEvent, "MixinPlayerTick"),
     // MOD-FILTERED MIXINS
 
     // The modFilter argument is a predicate, so you can also use the .and(), .or(), and .negate() methods to mix and
