@@ -3,7 +3,6 @@ package fr.iamacat.mycoordinatesmods.mixins.client;
 import static fr.iamacat.mycoordinatesmods.MyCoordinatesMods.toggleKeyBinding;
 import static fr.iamacat.mycoordinatesmods.MyCoordinatesMods.toggleKeyBinding2;
 import static fr.iamacat.mycoordinatesmods.config.CoordinatesConfig.CATEOGY_BIOMES;
-import static fr.iamacat.mycoordinatesmods.config.CoordinatesConfig._Position;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 
@@ -29,7 +28,8 @@ public class MixinPlayerTick {
             lastToggleTime = System.currentTimeMillis();
             CoordinatesEventHandler.showCoordinates = !CoordinatesEventHandler.showCoordinates;
         }
-        if (Keyboard.isKeyDown(toggleKeyBinding2.getKeyCode()) && System.currentTimeMillis() > lastToggleTime + TOGGLE_DELAY) {
+        if (Keyboard.isKeyDown(toggleKeyBinding2.getKeyCode())
+            && System.currentTimeMillis() > lastToggleTime + TOGGLE_DELAY) {
             lastToggleTime = System.currentTimeMillis();
             switch (CoordinatesConfig.hudPosition) {
                 case "top_left":
@@ -48,7 +48,12 @@ public class MixinPlayerTick {
                     break;
             }
             CoordinatesConfig.hudPosition = CoordinatesConfig._Position;
-            CoordinatesConfig.config.get(CATEOGY_BIOMES, "HUD Position(Possible config : top_left , top_right , bottom_left , bottom_right)", CoordinatesConfig._Position).set(CoordinatesConfig._Position);
+            CoordinatesConfig.config
+                .get(
+                    CATEOGY_BIOMES,
+                    "HUD Position(Possible config : top_left , top_right , bottom_left , bottom_right)",
+                    CoordinatesConfig._Position)
+                .set(CoordinatesConfig._Position);
             if (CoordinatesConfig.config.hasChanged()) {
                 CoordinatesConfig.config.save();
             }

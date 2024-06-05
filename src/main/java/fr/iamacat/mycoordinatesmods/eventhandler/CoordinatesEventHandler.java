@@ -13,9 +13,12 @@ public class CoordinatesEventHandler {
     public static boolean showCoordinates = true;
 
     @SubscribeEvent
-    public void onRenderGameOverlay(RenderGameOverlayEvent.Text event) {
+    public void onRenderGameOverlay(RenderGameOverlayEvent.Post event) {
+        if (event.type == RenderGameOverlayEvent.ElementType.TEXT) {
+            return;
+        }
         Minecraft minecraft = Minecraft.getMinecraft();
-        if (showCoordinates && !minecraft.gameSettings.showDebugInfo && minecraft.currentScreen == null) {
+        if (showCoordinates) {
             FontRenderer fontRenderer = minecraft.fontRenderer;
             ScaledResolution scaledResolution = event.resolution;
             int xCoord, yCoord;
