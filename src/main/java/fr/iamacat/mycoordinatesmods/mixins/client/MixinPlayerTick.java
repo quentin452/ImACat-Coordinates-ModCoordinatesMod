@@ -28,7 +28,7 @@ public class MixinPlayerTick {
 
     @Inject(method = "onUpdate", at = @At("HEAD"))
     public void onMyUpdate(CallbackInfo ci) {
-        if (Minecraft.getMinecraft().currentScreen instanceof net.minecraft.client.gui.GuiChat) {
+        if (Minecraft.getMinecraft().currentScreen != null) {
             return;
         }
         imACat_Coordinates_ModCoordinatesMod$handleToggleKey(
