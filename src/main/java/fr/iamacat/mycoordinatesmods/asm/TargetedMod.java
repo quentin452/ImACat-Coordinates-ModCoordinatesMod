@@ -25,7 +25,6 @@ public enum TargetedMod implements ITargetedMod {
      * OPTIFINE("OptiFine", false, startsWith("optifine")),
      * MEKANISM("Mekanism", false, startsWith("mekanism")),
      * BOTANIA("Botania", false, startsWith("botania+").or(startsWith("botania-")).or(startsWith("botania "))),
-     */
     MANAMETAL("manametalmod", false, startsWith("manametalmod")),
     SMOOTHFONT("SmoothFont", false, startsWith("SmoothFont")),
     EXTRAUTILS("ExtraUtilities", false, startsWith("extrautilities")),
@@ -130,7 +129,7 @@ public enum TargetedMod implements ITargetedMod {
     KORINBLUEBEDROCK("1-7-10-005-KoRIN", false, startsWith("1-7-10-005-KoRIN")),
     THAUMICREVELATIONS("ThaumicRevelations", false, startsWith("ThaumicRevelations")),
 
-    AETHER("aether", false, startsWith("aether")),;
+    AETHER("aether", false, startsWith("aether")),*/;
 
     @Getter
     private final String modName;
