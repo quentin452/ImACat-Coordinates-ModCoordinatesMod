@@ -7,8 +7,8 @@ import java.util.List;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import fr.iamacat.mycoordinatesmods.utils.Reference;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class CoordinatesConfig {
 

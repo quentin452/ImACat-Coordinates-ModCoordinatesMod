@@ -1,3 +1,6 @@
+//file:noinspection DependencyNotationArgument
+//file:noinspection GrUnresolvedAccess
+// TODO remove when fixed in RFG ^
 /*
  * Add your dependencies here. Supported configurations:
  *  - api("group:name:version:classifier"): if you use the types from this dependency in the public API of this mod
@@ -19,8 +22,7 @@
  *
  *  - shadowImplementation("g:n:v:c"): effectively the same as API, but the dependency is included in your jar under a renamed package name
  *       Requires you to enable usesShadowedDependencies in gradle.properties
- *
- *  - compile("g:n:v:c"): deprecated, replace with "api" (works like the old "compile") or "implementation" (can be more efficient)
+ *       For more info, see https://github.com/GregTechCEu/Buildscripts/blob/master/docs/shadow.md
  *
  * You can exclude transitive dependencies (dependencies of the chosen dependency) by appending { transitive = false } if needed,
  * but use this sparingly as it can break using your mod as another mod's dependency if you're not careful.
@@ -28,44 +30,20 @@
  * To depend on obfuscated jars you can use `devOnlyNonPublishable(rfg.deobf("dep:spec:1.2.3"))` to fetch an obfuscated jar from maven,
  * or `devOnlyNonPublishable(rfg.deobf(project.files("libs/my-mod-jar.jar")))` to use a file.
  *
+ * To add a mod with CurseMaven, replace '("g:n:v:c")' in the above with 'rfg.deobf("curse.maven:project_slug-project_id:file_id")'
+ * Example: devOnlyNonPublishable(rfg.deobf("curse.maven:top-245211:2667280"))
+ *
  * Gradle names for some of the configuration can be misleading, compileOnlyApi and runtimeOnly both get published as dependencies in Maven, but compileOnly does not.
  * The buildscript adds runtimeOnlyNonPublishable to also have a runtime dependency that's not published.
  *
- * For more details, see https://docs.gradle.org/8.0.1/userguide/java_library_plugin.html#sec:java_library_configurations_graph
+ * For more details, see https://docs.gradle.org/8.4/userguide/java_library_plugin.html#sec:java_library_configurations_graph
  */
 
-configurations {
-    transformedMod // Mods that can be transformed - used for compiling hodgepodge, but not necessary at runtime
-    transformedMod.canBeConsumed = false
-    transformedModCompileOnly
-    transformedModCompileOnly.canBeConsumed = false
-
-    // Add the transformed mod dependencies to the compilation and runtime classpaths, but don't publish them in the Maven metadata
-    compileClasspath.extendsFrom(transformedMod, transformedModCompileOnly)
-    runtimeClasspath.extendsFrom(transformedMod)
-    testCompileClasspath.extendsFrom(transformedMod, transformedModCompileOnly)
-    testRuntimeClasspath.extendsFrom(transformedMod)
-}
+// A hash map of mod to debug options that will enable it in runtime.
+// Anything that should be handled differently than always being "compileOnly" and also being "runtimeOnly" when debug enabled
+// should be handled in the main dependencies function.
+// When adding additional elements, sort by alphabetical name
 dependencies {
-    //Dev-only deps
-    compileOnly("org.projectlombok:lombok:[1.18.24,1.19)") {
-        transitive = false
-    }
-    annotationProcessor("org.projectlombok:lombok:[1.18.24,1.19)")
-
-    implementation("org.joml:joml:1.10.5")
-
-    implementation "curse.maven:fplib-665627:4905393-deobf-sources-api"
-
-  //  runtimeOnly('com.github.GTNewHorizons:BuildCraft:7.1.36:dev')
-  //  transformedMod("com.github.GTNewHorizons:OpenComputers:1.10.0-GTNH:sources")
-
-    //implementation files("libs/Real.Kether-V1.9.5.2.jar")
-
-}
-
-jar {
-    manifest {
-        attributes 'FMLAT': 'optimizationsandtweaks_at.cfg'
-    }
+    // Libraries
+    implementation 'com.cleanroommc:configanytime:3.0'
 }

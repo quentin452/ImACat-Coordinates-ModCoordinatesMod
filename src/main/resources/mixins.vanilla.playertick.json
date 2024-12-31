@@ -1,0 +1,11 @@
+{
+    "package": "fr.iamacat.mycoordinatesmods.mixins.common",
+    "refmap": "iamacatcoordinates.refmap.json",
+    "minVersion": "0.8.5",
+    "compatibilityLevel": "JAVA_8",
+    "priority": 1001,
+	"required": true,
+	"target": "@env(DEFAULT)",
+    "mixins": ["MixinPlayerTick"]
+
+}

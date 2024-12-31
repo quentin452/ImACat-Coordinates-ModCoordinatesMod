@@ -5,8 +5,8 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import fr.iamacat.mycoordinatesmods.config.CoordinatesConfig;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CoordinatesEventHandler {
 
@@ -14,13 +14,13 @@ public class CoordinatesEventHandler {
 
     @SubscribeEvent
     public void onRenderGameOverlay(RenderGameOverlayEvent.Post event) {
-        if (event.type == RenderGameOverlayEvent.ElementType.TEXT) {
+        if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT) {
             return;
         }
         Minecraft minecraft = Minecraft.getMinecraft();
         if (showCoordinates && !minecraft.gameSettings.showDebugInfo) {
             FontRenderer fontRenderer = minecraft.fontRenderer;
-            ScaledResolution scaledResolution = event.resolution;
+            ScaledResolution scaledResolution = event.getResolution();
             int xCoord, yCoord;
             boolean isTop = false;
             switch (CoordinatesConfig.hudPosition) {
@@ -45,22 +45,22 @@ public class CoordinatesEventHandler {
                     break;
             }
             if (!CoordinatesConfig.disableXCoord) {
-                String x = String.format("%.2f", minecraft.thePlayer.posX);
+                String x = String.format("%.2f", minecraft.player.posX);
                 fontRenderer.drawString("X: " + x, xCoord, yCoord, 0xFFFFFF);
                 yCoord += isTop ? 10 : -10;
             }
             if (!CoordinatesConfig.disableYCoord) {
-                String y = String.format("%.2f", minecraft.thePlayer.posY);
+                String y = String.format("%.2f", minecraft.player.posY);
                 fontRenderer.drawString("Y: " + y, xCoord, yCoord, 0xFFFFFF);
                 yCoord += isTop ? 10 : -10;
             }
             if (!CoordinatesConfig.disableZCoord) {
-                String z = String.format("%.2f", minecraft.thePlayer.posZ);
+                String z = String.format("%.2f", minecraft.player.posZ);
                 fontRenderer.drawString("Z: " + z, xCoord, yCoord, 0xFFFFFF);
                 yCoord += isTop ? 10 : -10;
             }
             if (!CoordinatesConfig.disableFacing) {
-                char facing = getCardinalPoint(minecraft.thePlayer.rotationYaw);
+                char facing = getCardinalPoint(minecraft.player.rotationYaw);
                 fontRenderer.drawString("Facing: " + facing, xCoord, yCoord, 0xFFFFFF);
                 yCoord += isTop ? 10 : -10;
             }

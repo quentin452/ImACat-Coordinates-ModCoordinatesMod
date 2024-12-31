@@ -1,11 +1,10 @@
-package fr.iamacat.mycoordinatesmods.mixins.client;
+package fr.iamacat.mycoordinatesmods.mixins.common;
 
 import static fr.iamacat.mycoordinatesmods.MyCoordinatesMods.toggleKeyBinding;
 import static fr.iamacat.mycoordinatesmods.MyCoordinatesMods.toggleKeyBinding2;
 import static fr.iamacat.mycoordinatesmods.config.CoordinatesConfig.CATEOGY_BIOMES;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import org.lwjgl.input.Keyboard;
@@ -72,11 +71,11 @@ public class MixinPlayerTick {
                 }
                 CoordinatesConfig.hudPosition = CoordinatesConfig._Position;
                 CoordinatesConfig.config
-                    .get(
-                        CATEOGY_BIOMES,
-                        "HUD Position(Possible config : top_left , top_right , bottom_left , bottom_right)",
-                        CoordinatesConfig._Position)
-                    .set(CoordinatesConfig._Position);
+                        .get(
+                                CATEOGY_BIOMES,
+                                "HUD Position(Possible config : top_left , top_right , bottom_left , bottom_right)",
+                                CoordinatesConfig._Position)
+                        .set(CoordinatesConfig._Position);
                 if (CoordinatesConfig.config.hasChanged()) {
                     CoordinatesConfig.config.save();
                 }
