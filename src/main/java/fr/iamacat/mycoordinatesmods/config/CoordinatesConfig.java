@@ -1,65 +1,74 @@
 package fr.iamacat.mycoordinatesmods.config;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import com.electronwill.nightconfig.core.file.CommentedFileConfig;
+import com.electronwill.nightconfig.core.io.WritingMode;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.config.ModConfig;
 
-import net.minecraftforge.common.config.ConfigCategory;
-import net.minecraftforge.common.config.Configuration;
-
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import fr.iamacat.mycoordinatesmods.utils.Reference;
+import java.nio.file.Path;
 
 public class CoordinatesConfig {
 
-    public static Configuration config;
-    private static final List<ConfigCategory> allCategories = new ArrayList();
-    public static String CATEOGY_BIOMES;
-    public static boolean disableFPSCounter;
-    public static boolean disableXCoord;
-    public static boolean disableYCoord;
-    public static boolean disableZCoord;
-    public static boolean disableFacing;
-    public static String hudPosition;
-    public static String _Position;
+    public static final String CATEOGY_BIOMES = "all";
+    public static ForgeConfigSpec.BooleanValue disableFPSCounter;
+    public static ForgeConfigSpec.BooleanValue disableXCoord;
+    public static ForgeConfigSpec.BooleanValue disableYCoord;
+    public static ForgeConfigSpec.BooleanValue disableZCoord;
+    public static ForgeConfigSpec.BooleanValue disableFacing;
+    public static ForgeConfigSpec.EnumValue<HudPosition> hudPosition;
+    public static HudPosition _Position;
 
-    private static void setupCategories() {
-        CATEOGY_BIOMES = makeCategory("all");
+    private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
+    public static final ForgeConfigSpec COMMON_CONFIG;
+
+
+    static {
+        setupConfig();
+        COMMON_CONFIG = COMMON_BUILDER.build();
     }
 
-    private static String makeCategory(String name) {
-        ConfigCategory category = config.getCategory(name);
-        category.setLanguageKey(Reference.MOD_ID + ".config." + name);
-        allCategories.add(category);
-        return name;
+    private static void setupConfig() {
+        COMMON_BUILDER.comment("General configuration settings").push(CATEOGY_BIOMES);
+        disableFPSCounter = COMMON_BUILDER.comment("Disable FPS Counter").define("disableFPSCounter", false);
+        disableXCoord = COMMON_BUILDER.comment("Disable X Coordinates Calculation").define("disableXCoord", false);
+        disableYCoord = COMMON_BUILDER.comment("Disable Y Coordinates Calculation").define("disableYCoord", false);
+        disableZCoord = COMMON_BUILDER.comment("Disable Z Coordinates Calculation").define("disableZCoord", false);
+        disableFacing = COMMON_BUILDER.comment("Disable Facing Calculation").define("disableFacing", false);
+        hudPosition = COMMON_BUILDER.comment("HUD Position").defineEnum("hudPosition", HudPosition.TOP_RIGHT, HudPosition.values());
+        COMMON_BUILDER.pop();
     }
 
-    public static void setupAndLoad(FMLPreInitializationEvent event) {
-        config = new Configuration(new File(event.getModConfigurationDirectory(), "mycroordinatesmods_nomixins.cfg"));
-        setupCategories();
-        load();
+    public enum HudPosition {
+        TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT;
     }
 
-    public static void load() {
-        _Position = "top_right";
-        disableFPSCounter = config.get(CATEOGY_BIOMES, "Disable FPS Counter???", false)
-            .getBoolean();
-        disableXCoord = config.get(CATEOGY_BIOMES, "Disable X Coordinates Calculation?", false)
-            .getBoolean();
-        disableYCoord = config.get(CATEOGY_BIOMES, "Disable Y Coordinates Calculation?", false)
-            .getBoolean();
-        disableZCoord = config.get(CATEOGY_BIOMES, "Disable Z Coordinates Calculation?", false)
-            .getBoolean();
-        disableFacing = config.get(CATEOGY_BIOMES, "Disable Facing Calculation?", false)
-            .getBoolean();
-        hudPosition = config
-            .get(
-                CATEOGY_BIOMES,
-                "HUD Position(Possible config : top_left , top_right , bottom_left , bottom_right)",
-                _Position)
-            .getString();
-        if (config.hasChanged()) {
-            config.save();
+    @SubscribeEvent
+    public static void onLoad(final ModConfig.ModConfigEvent configEvent) {
+        if (configEvent.getConfig().getSpec() == COMMON_CONFIG) {
+            bakeConfig();
         }
+    }
+
+    @SubscribeEvent
+    public static void onFileChange(final ModConfig.ModConfigEvent configEvent) {
+        if (configEvent.getConfig().getSpec() == COMMON_CONFIG) {
+            bakeConfig();
+        }
+    }
+
+    public static void bakeConfig() {
+        _Position = hudPosition.get();
+    }
+
+    public static void loadConfig(ForgeConfigSpec config, Path path) {
+        final CommentedFileConfig file = CommentedFileConfig.builder(path)
+            .sync()
+            .autosave()
+            .writingMode(WritingMode.REPLACE)
+            .build();
+
+        file.load();
+        config.setConfig(file);
     }
 }
