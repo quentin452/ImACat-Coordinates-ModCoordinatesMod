@@ -61,7 +61,7 @@ public class CoordinatesEventHandler {
                 yCoord += isTop ? 10 : -10;
             }
             if (!CoordinatesConfig.disableFacing) {
-                char facing = getCardinalPoint(minecraft.player.yaw);
+                char facing = getCardinalPoint(minecraft.player.getYaw());
                 textRenderer.draw(matrixStack, "Facing: " + facing, xCoord, yCoord, 0xFFFFFF);
                 yCoord += isTop ? 10 : -10;
             }
