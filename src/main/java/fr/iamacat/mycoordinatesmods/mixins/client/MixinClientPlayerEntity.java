@@ -3,9 +3,8 @@ package fr.iamacat.mycoordinatesmods.mixins.client;
 import static fr.iamacat.mycoordinatesmods.MyCoordinatesMods.toggleKeyBinding;
 import static fr.iamacat.mycoordinatesmods.MyCoordinatesMods.toggleKeyBinding2;
 
-import net.minecraft.client.Minecraft;
-
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,7 +28,7 @@ public class MixinClientPlayerEntity {
 
     @Inject(method = "tick", at = @At("HEAD")) // Changed to "tick" method for ServerPlayerEntity
     public void onTick(CallbackInfo ci) {
-        if (Minecraft.getInstance().screen != null) {
+        if (MinecraftClient.getInstance().currentScreen != null) {
             return;
         }
 
@@ -39,9 +38,9 @@ public class MixinClientPlayerEntity {
             lastToggleTime = currentTime;
 
             // Check key presses on the client side (use KeyBinding for this)
-            isToggleKey1Pressed = toggleKeyBinding.isDown();
+            isToggleKey1Pressed = toggleKeyBinding.isPressed();
 
-            isToggleKey2Pressed = toggleKeyBinding2.isDown();
+            isToggleKey2Pressed = toggleKeyBinding2.isPressed();
 
             // Toggle coordinates visibility
             if (isToggleKey1Pressed) {
@@ -50,7 +49,7 @@ public class MixinClientPlayerEntity {
 
             // Switch coordinates position
             if (isToggleKey2Pressed) {
-                switch (CoordinatesConfig.hudPosition.get()) {
+                switch (CoordinatesConfig.hudPosition) {
                     case TOP_LEFT:
                         CoordinatesConfig._Position = CoordinatesConfig.HudPosition.TOP_RIGHT;
                         break;
@@ -66,9 +65,9 @@ public class MixinClientPlayerEntity {
                     default:
                         break;
                 }
-                CoordinatesConfig.hudPosition.set(CoordinatesConfig._Position);
-                if (CoordinatesConfig.COMMON_CONFIG != null) {
-                    CoordinatesConfig.COMMON_CONFIG.save();
+                CoordinatesConfig.hudPosition = CoordinatesConfig._Position;
+                if (CoordinatesConfig.config != null) {
+                    CoordinatesConfig.config.save();
                 }
             }
         }

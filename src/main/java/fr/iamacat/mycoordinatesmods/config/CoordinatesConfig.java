@@ -1,74 +1,85 @@
 package fr.iamacat.mycoordinatesmods.config;
 
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import com.electronwill.nightconfig.core.io.WritingMode;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.config.ModConfig;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.loader.api.FabricLoader;
+import com.electronwill.nightconfig.core.file.FileConfig;
 
+import java.io.File;
 import java.nio.file.Path;
 
 public class CoordinatesConfig {
 
-    public static final String CATEOGY_BIOMES = "all";
-    public static ForgeConfigSpec.BooleanValue disableFPSCounter;
-    public static ForgeConfigSpec.BooleanValue disableXCoord;
-    public static ForgeConfigSpec.BooleanValue disableYCoord;
-    public static ForgeConfigSpec.BooleanValue disableZCoord;
-    public static ForgeConfigSpec.BooleanValue disableFacing;
-    public static ForgeConfigSpec.EnumValue<HudPosition> hudPosition;
+    public static final String CATEGORY_HUD = "all";
+    public static boolean disableFPSCounter;
+    public static boolean disableXCoord;
+    public static boolean disableYCoord;
+    public static boolean disableZCoord;
+    public static boolean disableFacing;
+    public static HudPosition hudPosition;
     public static HudPosition _Position;
 
-    private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
-    public static final ForgeConfigSpec COMMON_CONFIG;
+    private static final String CONFIG_FILE_NAME = "mycoordinatesmods.toml";
+    public static FileConfig config;
 
+    public static void init() {
+        // Charger la configuration au démarrage
+        Path configDir = FabricLoader.getInstance().getConfigDir();
+        File configFile = new File(configDir.toFile(), CONFIG_FILE_NAME);
 
-    static {
-        setupConfig();
-        COMMON_CONFIG = COMMON_BUILDER.build();
-    }
-
-    private static void setupConfig() {
-        COMMON_BUILDER.comment("General configuration settings").push(CATEOGY_BIOMES);
-        disableFPSCounter = COMMON_BUILDER.comment("Disable FPS Counter").define("disableFPSCounter", false);
-        disableXCoord = COMMON_BUILDER.comment("Disable X Coordinates Calculation").define("disableXCoord", false);
-        disableYCoord = COMMON_BUILDER.comment("Disable Y Coordinates Calculation").define("disableYCoord", false);
-        disableZCoord = COMMON_BUILDER.comment("Disable Z Coordinates Calculation").define("disableZCoord", false);
-        disableFacing = COMMON_BUILDER.comment("Disable Facing Calculation").define("disableFacing", false);
-        hudPosition = COMMON_BUILDER.comment("HUD Position").defineEnum("hudPosition", HudPosition.TOP_RIGHT, HudPosition.values());
-        COMMON_BUILDER.pop();
-    }
-
-    public enum HudPosition {
-        TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT;
-    }
-
-    @SubscribeEvent
-    public static void onLoad(final ModConfig.ModConfigEvent configEvent) {
-        if (configEvent.getConfig().getSpec() == COMMON_CONFIG) {
-            bakeConfig();
+        // Vérifier si le fichier de configuration existe, sinon en créer un nouveau
+        if (!configFile.exists()) {
+            createDefaultConfig(configFile);
         }
+
+        config = FileConfig.of(configFile);
+        loadConfig();
+
+        // Appliquer les valeurs à la configuration
+        ServerLifecycleEvents.SERVER_STARTING.register(server -> {
+            bakeConfig();
+        });
     }
 
-    @SubscribeEvent
-    public static void onFileChange(final ModConfig.ModConfigEvent configEvent) {
-        if (configEvent.getConfig().getSpec() == COMMON_CONFIG) {
-            bakeConfig();
-        }
+    private static void loadConfig() {
+        config.load();
+        // Charger les valeurs depuis le fichier
+        disableFPSCounter = config.getOrElse(CATEGORY_HUD + ".disableFPSCounter", false);
+        disableXCoord = config.getOrElse(CATEGORY_HUD + ".disableXCoord", false);
+        disableYCoord = config.getOrElse(CATEGORY_HUD + ".disableYCoord", false);
+        disableZCoord = config.getOrElse(CATEGORY_HUD + ".disableZCoord", false);
+        disableFacing = config.getOrElse(CATEGORY_HUD + ".disableFacing", false);
+        String hudPos = config.getOrElse(CATEGORY_HUD + ".hudPosition", HudPosition.TOP_RIGHT.name());
+        hudPosition = HudPosition.valueOf(hudPos);
+    }
+
+    private static void createDefaultConfig(File configFile) {
+        // Créer un fichier de configuration avec des valeurs par défaut si le fichier n'existe pas
+        config = FileConfig.of(configFile);
+        config.add(CATEGORY_HUD + ".disableFPSCounter", false);
+        config.add(CATEGORY_HUD + ".disableXCoord", false);
+        config.add(CATEGORY_HUD + ".disableYCoord", false);
+        config.add(CATEGORY_HUD + ".disableZCoord", false);
+        config.add(CATEGORY_HUD + ".disableFacing", false);
+        config.add(CATEGORY_HUD + ".hudPosition", HudPosition.TOP_RIGHT.name());
+        config.save();
     }
 
     public static void bakeConfig() {
-        _Position = hudPosition.get();
+        _Position = hudPosition;
     }
 
-    public static void loadConfig(ForgeConfigSpec config, Path path) {
-        final CommentedFileConfig file = CommentedFileConfig.builder(path)
-            .sync()
-            .autosave()
-            .writingMode(WritingMode.REPLACE)
-            .build();
+    public static void saveConfig() {
+        // Sauvegarder la configuration
+        config.set(CATEGORY_HUD + ".disableFPSCounter", disableFPSCounter);
+        config.set(CATEGORY_HUD + ".disableXCoord", disableXCoord);
+        config.set(CATEGORY_HUD + ".disableYCoord", disableYCoord);
+        config.set(CATEGORY_HUD + ".disableZCoord", disableZCoord);
+        config.set(CATEGORY_HUD + ".disableFacing", disableFacing);
+        config.set(CATEGORY_HUD + ".hudPosition", hudPosition.name());
+        config.save();
+    }
 
-        file.load();
-        config.setConfig(file);
+    public enum HudPosition {
+        TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
     }
 }

@@ -1,4 +1,4 @@
-package fr.iamacat.mycoordinatesmods;
+package fr.iamacat.mycoordinatesmods.utils;
 
 public class Tags {
 

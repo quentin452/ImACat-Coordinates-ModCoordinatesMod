@@ -1,10 +1,11 @@
 {
-    "required": true,
-    "package": "fr.iamacat.mycoordinatesmods.mixins",
-    "compatibilityLevel": "JAVA_8",
-    "refmap": "mycoordinatesmods.refmap.json",
-    "client": [
-        "client.MixinClientPlayerEntity"
-    ],
-    "minVersion": "0.8"
+	"required": true,
+	"package": "fr.iamacat.mycoordinatesmods.mixins",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+		"client.MixinClientPlayerEntity"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
 }
