@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import fr.iamacat.mycoordinatesmods.config.CoordinatesConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class CoordinatesEventHandler {
@@ -12,16 +12,12 @@ public class CoordinatesEventHandler {
     public static boolean showCoordinates = true;
 
     @SubscribeEvent
-    public void onRenderGameOverlay(RenderGameOverlayEvent.Text event) {
-        if (event.getType() != RenderGameOverlayEvent.ElementType.TEXT) {
-            return;
-        }
-
+    public void onRenderGameOverlay(RenderGuiOverlayEvent event) {
         Minecraft minecraft = Minecraft.getInstance();
         if (showCoordinates && !minecraft.options.renderDebug && minecraft.player != null) {
             // Remplacer FontRenderer par TextRenderer
             Font textRenderer = minecraft.font;
-            PoseStack matrixStack = event.getMatrixStack();
+            PoseStack matrixStack = event.getPoseStack();
             int xCoord, yCoord;
             boolean isTop = false;
 
@@ -76,10 +72,12 @@ public class CoordinatesEventHandler {
         }
     }
 
-    private final String[] cardinalPoints = { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
+    private final String[] cardinalPoints = { "S", "SW", "W", "NW", "N", "NE", "E", "SE" };
 
     private char getCardinalPoint(float yaw) {
-        int index = Math.round(yaw / 45f) & 7;
+        yaw = (yaw + 360) % 360;
+        int index = Math.round((yaw + 22.5f) / 45f) & 7;
         return cardinalPoints[index].charAt(0);
     }
+
 }

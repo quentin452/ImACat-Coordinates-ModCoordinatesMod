@@ -1,6 +1,5 @@
 package fr.iamacat.mycoordinatesmods;
 
-import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -13,6 +12,8 @@ import fr.iamacat.mycoordinatesmods.config.CoordinatesConfig;
 import fr.iamacat.mycoordinatesmods.eventhandler.CoordinatesEventHandler;
 import fr.iamacat.mycoordinatesmods.utils.Reference;
 import net.minecraft.client.KeyMapping;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.lwjgl.glfw.GLFW;
 
 @Mod(Reference.MOD_ID)
@@ -26,7 +27,8 @@ public class MyCoordinatesMods {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         // Enregistrer le code de configuration client
-        modEventBus.addListener(this::doClientStuff);
+        modEventBus.addListener(this::onClientSetup);
+        modEventBus.addListener(this::registerKeyMappings);
 
         // S'enregistrer pour les événements du serveur et autres événements de jeu
         MinecraftForge.EVENT_BUS.register(this);
@@ -39,20 +41,22 @@ public class MyCoordinatesMods {
         // Enregistrer le code de configuration commune
     }
 
-    private void doClientStuff(final FMLClientSetupEvent event) {
-        // Enregistrer le code client uniquement ici, comme les key mappings
-        toggleKeyBinding = new KeyMapping("key.coordinates.toggle", GLFW.GLFW_KEY_T, "key.categories.iamacatcoordinatesmod");
-        toggleKeyBinding2 = new KeyMapping("key.coordinates.position", GLFW.GLFW_KEY_Y, "key.categories.iamacatcoordinatesmod");
-
-        // Enregistrer les key mappings avec Forge
-        ClientRegistry.registerKeyBinding(toggleKeyBinding);
-        ClientRegistry.registerKeyBinding(toggleKeyBinding2);
-
-        // Enregistrer le gestionnaire d'événements pour l'affichage des coordonnées
+    private void onClientSetup(final FMLClientSetupEvent event) {
         MinecraftForge.EVENT_BUS.register(new CoordinatesEventHandler());
     }
 
     private void loadComplete(final FMLLoadCompleteEvent event) {
         // Code exécuté à la fin du chargement
+    }
+
+    @SubscribeEvent
+    public void registerKeyMappings(RegisterKeyMappingsEvent event) {
+        // Enregistrer le code client uniquement ici, comme les key mappings
+        toggleKeyBinding = new KeyMapping("key.coordinates.toggle", GLFW.GLFW_KEY_T, "key.categories.iamacatcoordinatesmod");
+        toggleKeyBinding2 = new KeyMapping("key.coordinates.position", GLFW.GLFW_KEY_Y, "key.categories.iamacatcoordinatesmod");
+
+        // Enregistrer les key mappings avec Forge
+        event.register(toggleKeyBinding);
+        event.register(toggleKeyBinding2);
     }
 }
