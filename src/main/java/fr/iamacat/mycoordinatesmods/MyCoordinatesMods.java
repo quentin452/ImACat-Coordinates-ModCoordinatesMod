@@ -1,5 +1,6 @@
 package fr.iamacat.mycoordinatesmods;
 
+import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -12,7 +13,6 @@ import fr.iamacat.mycoordinatesmods.config.CoordinatesConfig;
 import fr.iamacat.mycoordinatesmods.eventhandler.CoordinatesEventHandler;
 import fr.iamacat.mycoordinatesmods.utils.Reference;
 import net.minecraft.client.KeyMapping;
-import net.minecraftforge.fmlclient.registry.ClientRegistry;
 import org.lwjgl.glfw.GLFW;
 
 @Mod(Reference.MOD_ID)

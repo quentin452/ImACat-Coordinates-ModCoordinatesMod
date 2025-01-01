@@ -17,7 +17,7 @@ archivesBaseName = "${fileName}-${mcVersion}"
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
-    mappings channel: 'official', version: '1.17.1'
+    mappings channel: 'official', version: '1.18.2'
     accessTransformer = file('src/main/resources/META-INF/mycoordinatesmods_at.cfg')
     runs {
         client = {
