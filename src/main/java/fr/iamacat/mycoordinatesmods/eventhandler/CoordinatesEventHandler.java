@@ -77,7 +77,7 @@ public class CoordinatesEventHandler {
         }
     }
 
-    private final String[] cardinalPoints = { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
+    private final String[] cardinalPoints = { "S", "SW", "W", "NW", "N", "NE", "E", "SE" };
 
     private char getCardinalPoint(float yaw) {
         int index = Math.round(yaw / 45f) & 7;
