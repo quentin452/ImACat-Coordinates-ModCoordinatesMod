@@ -1,23 +1,32 @@
 package fr.iamacat.mycoordinatesmods.eventhandler;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import fr.iamacat.mycoordinatesmods.config.CoordinatesConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import org.joml.Matrix4f;
+import net.minecraftforge.fml.common.Mod;
 
+@Mod.EventBusSubscriber(Dist.CLIENT)
 public class CoordinatesEventHandler {
 
     public static boolean showCoordinates = true;
 
     @SubscribeEvent
-    public void onRenderGameOverlay(RenderLevelStageEvent event) {
+    public static void onRenderTick(TickEvent.RenderTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            renderGameOverlay();
+        }
+    }
+
+    public static void renderGameOverlay() {
         Minecraft minecraft = Minecraft.getInstance();
         if (showCoordinates && !minecraft.getDebugOverlay().showDebugScreen() && minecraft.player != null) {
+            PoseStack poseStack = new PoseStack();
             Font textRenderer = minecraft.font;
-            Matrix4f matrix = event.getPoseStack();
             int xCoord, yCoord;
             boolean isTop = false;
             int scaledWidth = minecraft.getWindow().getGuiScaledWidth();
@@ -46,28 +55,28 @@ public class CoordinatesEventHandler {
             }
             if (!CoordinatesConfig.disableXCoord.get()) {
                 String x = String.format("%.2f", minecraft.player.getX());
-                textRenderer.drawInBatch("X: " + x, xCoord, yCoord, 0xFFFFFF, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
+                textRenderer.drawInBatch("X: " + x, xCoord, yCoord, 0xFFFFFF, false, poseStack.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
                 yCoord += isTop ? 10 : -10;
             }
             if (!CoordinatesConfig.disableYCoord.get()) {
                 String y = String.format("%.2f", minecraft.player.getY());
-                textRenderer.drawInBatch("Y: " + y, xCoord, yCoord, 0xFFFFFF, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
+                textRenderer.drawInBatch("Y: " + y, xCoord, yCoord, 0xFFFFFF, false, poseStack.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
                 yCoord += isTop ? 10 : -10;
             }
             if (!CoordinatesConfig.disableZCoord.get()) {
                 String z = String.format("%.2f", minecraft.player.getZ());
-                textRenderer.drawInBatch("Z: " + z, xCoord, yCoord, 0xFFFFFF, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
+                textRenderer.drawInBatch("Z: " + z, xCoord, yCoord, 0xFFFFFF, false, poseStack.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
                 yCoord += isTop ? 10 : -10;
             }
             if (!CoordinatesConfig.disableFacing.get()) {
                 char facing = getCardinalPoint(minecraft.player.getYRot());
-                textRenderer.drawInBatch("Facing: " + facing, xCoord, yCoord, 0xFFFFFF, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
+                textRenderer.drawInBatch("Facing: " + facing, xCoord, yCoord, 0xFFFFFF, false, poseStack.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
                 yCoord += isTop ? 10 : -10;
             }
             if (!CoordinatesConfig.disableFPSCounter.get()) {
                 String fpsString = minecraft.fpsString;
                 String fps = fpsString.split(" ")[0];
-                textRenderer.drawInBatch("FPS: " + fps, xCoord, yCoord, 0xFFFFFF, false, matrix, bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
+                textRenderer.drawInBatch("FPS: " + fps, xCoord, yCoord, 0xFFFFFF, false, poseStack.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, 15728880);
             }
             if (bufferSource instanceof MultiBufferSource.BufferSource) {
                 bufferSource.endBatch();
@@ -75,9 +84,9 @@ public class CoordinatesEventHandler {
         }
     }
 
-    private final String[] cardinalPoints = { "S", "SW", "W", "NW", "N", "NE", "E", "SE" };
+    private final static String[] cardinalPoints = {"S", "SW", "W", "NW", "N", "NE", "E", "SE"};
 
-    private char getCardinalPoint(float yaw) {
+    private static char getCardinalPoint(float yaw) {
         int index = Math.round(yaw / 45f) & 7;
         return cardinalPoints[index].charAt(0);
     }

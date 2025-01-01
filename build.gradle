@@ -15,7 +15,7 @@ apply plugin: 'org.spongepowered.mixin'
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 minecraft {
-    mappings channel: 'official', version: '1.20.6'
+    mappings channel: 'official', version: '1.21.4'
     accessTransformer = file('src/main/resources/META-INF/mycoordinatesmods_at.cfg')
     runs {
         client = {
