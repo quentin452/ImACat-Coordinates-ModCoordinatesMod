@@ -15,14 +15,16 @@ import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.lwjgl.glfw.GLFW;
+import org.spongepowered.asm.launch.MixinBootstrap;
 
 @Mod(Reference.MOD_ID)
 public class MyCoordinatesMods {
 
     public static KeyMapping toggleKeyBinding;
     public static KeyMapping toggleKeyBinding2;
-
+    public static boolean showCoordinates = true;
     public MyCoordinatesMods() {
+        MixinBootstrap.init();
         // Enregistrer la méthode de configuration commune pour le modloading
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 

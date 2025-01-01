@@ -2,9 +2,9 @@ modLoader="javafml" #mandatory
 
 loaderVersion="[32,)" #mandatory
 
-authors="${author}" #optional
+authors="quentin452" #optional
 
-license="MIT License" #mandatory
+license=" LGPL-3.0-only" #mandatory
 
 [[mods]] #mandatory
 
@@ -14,7 +14,7 @@ version="0.8" #mandatory
 
 displayName="My Coordinates Mod" #mandatory
 
-description='''${desc}'''
+description=''''''
 
 [[dependencies.mycoordinatesmods]] #optional
 modId="forge" #mandatory
@@ -26,6 +26,8 @@ side="BOTH"
 [[dependencies.mycoordinatesmods]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.19.4]"
+versionRange="[1.20.6]"
 ordering="NONE"
 side="BOTH"
+[mixin]
+config="mycoordinatesmods.mixins.json"

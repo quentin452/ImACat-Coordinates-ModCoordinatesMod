@@ -1,8 +1,5 @@
 package fr.iamacat.mycoordinatesmods.mixins.client;
 
-import static fr.iamacat.mycoordinatesmods.MyCoordinatesMods.toggleKeyBinding;
-import static fr.iamacat.mycoordinatesmods.MyCoordinatesMods.toggleKeyBinding2;
-
 import net.minecraft.client.Minecraft;
 
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +10,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import fr.iamacat.mycoordinatesmods.config.CoordinatesConfig;
-import fr.iamacat.mycoordinatesmods.eventhandler.CoordinatesEventHandler;
+
+import static fr.iamacat.mycoordinatesmods.MyCoordinatesMods.*;
 
 @Mixin(Player.class)
 public class MixinPlayer {
@@ -27,7 +25,7 @@ public class MixinPlayer {
     @Unique
     private boolean isToggleKey2Pressed = false;
 
-    @Inject(method = "tick", at = @At("HEAD"))
+    @Inject(method = "tick", at = @At("HEAD"),remap = false)
     public void onTick(CallbackInfo ci) {
         if (Minecraft.getInstance().screen != null) {
             return;
@@ -43,7 +41,7 @@ public class MixinPlayer {
 
             // Toggle coordinates visibility
             if (isToggleKey1Pressed) {
-                CoordinatesEventHandler.showCoordinates = !CoordinatesEventHandler.showCoordinates;
+                showCoordinates = !showCoordinates;
             }
 
             // Switch coordinates position
