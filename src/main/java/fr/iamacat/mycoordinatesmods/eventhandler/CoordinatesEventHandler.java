@@ -4,6 +4,7 @@ import fr.iamacat.mycoordinatesmods.config.CoordinatesConfig;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 
 public class CoordinatesEventHandler {
@@ -11,12 +12,12 @@ public class CoordinatesEventHandler {
     public static boolean showCoordinates = true;
 
     public static void register() {
-        HudRenderCallback.EVENT.register((matrixStack, tickDelta) -> onRenderGameOverlay(matrixStack));
+        HudRenderCallback.EVENT.register((drawContext, tickDelta) -> onRenderGameOverlay(drawContext));
     }
 
-    public static void onRenderGameOverlay(MatrixStack matrixStack) {
+    public static void onRenderGameOverlay(DrawContext drawContext) {
         MinecraftClient minecraft = MinecraftClient.getInstance();
-        if (showCoordinates && !minecraft.options.debugEnabled && minecraft.player != null) {
+        if (showCoordinates && !minecraft.getDebugHud().shouldShowDebugHud() && minecraft.player != null) {
             TextRenderer textRenderer = minecraft.textRenderer;
             int xCoord, yCoord;
             boolean isTop = false;
@@ -47,27 +48,27 @@ public class CoordinatesEventHandler {
             // Draw text based on the position
             if (!CoordinatesConfig.disableXCoord) {
                 String x = String.format("%.2f", minecraft.player.getX());
-                textRenderer.draw(matrixStack, "X: " + x, xCoord, yCoord, 0xFFFFFF);
+                drawContext.drawText(textRenderer, "X: " + x, xCoord, yCoord, 0xFFFFFF, false);
                 yCoord += isTop ? 10 : -10;
             }
             if (!CoordinatesConfig.disableYCoord) {
                 String y = String.format("%.2f", minecraft.player.getY());
-                textRenderer.draw(matrixStack, "Y: " + y, xCoord, yCoord, 0xFFFFFF);
+                drawContext.drawText(textRenderer, "Y: " + y, xCoord, yCoord, 0xFFFFFF, false);
                 yCoord += isTop ? 10 : -10;
             }
             if (!CoordinatesConfig.disableZCoord) {
                 String z = String.format("%.2f", minecraft.player.getZ());
-                textRenderer.draw(matrixStack, "Z: " + z, xCoord, yCoord, 0xFFFFFF);
+                drawContext.drawText(textRenderer, "Z: " + z, xCoord, yCoord, 0xFFFFFF, false);
                 yCoord += isTop ? 10 : -10;
             }
             if (!CoordinatesConfig.disableFacing) {
                 char facing = getCardinalPoint(minecraft.player.getYaw());
-                textRenderer.draw(matrixStack, "Facing: " + facing, xCoord, yCoord, 0xFFFFFF);
+                drawContext.drawText(textRenderer, "Facing: " + facing, xCoord, yCoord, 0xFFFFFF, false);
                 yCoord += isTop ? 10 : -10;
             }
             if (!CoordinatesConfig.disableFPSCounter) {
                 String fpsString = minecraft.fpsDebugString.split(" ")[0];
-                textRenderer.draw(matrixStack, "FPS: " + fpsString, xCoord, yCoord, 0xFFFFFF);
+                drawContext.drawText(textRenderer, "FPS: " + fpsString, xCoord, yCoord, 0xFFFFFF, false);
             }
         }
     }
