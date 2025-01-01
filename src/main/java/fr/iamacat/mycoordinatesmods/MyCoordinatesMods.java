@@ -1,9 +1,7 @@
 package fr.iamacat.mycoordinatesmods;
 
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -13,47 +11,48 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import fr.iamacat.mycoordinatesmods.config.CoordinatesConfig;
 import fr.iamacat.mycoordinatesmods.eventhandler.CoordinatesEventHandler;
 import fr.iamacat.mycoordinatesmods.utils.Reference;
+import net.minecraft.client.KeyMapping;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
 import org.lwjgl.glfw.GLFW;
 
 @Mod(Reference.MOD_ID)
 public class MyCoordinatesMods {
 
-    // Declare key bindings
-    public static KeyBinding toggleKeyBinding;
-    public static KeyBinding toggleKeyBinding2;
+    public static KeyMapping toggleKeyBinding;
+    public static KeyMapping toggleKeyBinding2;
 
     public MyCoordinatesMods() {
-        // Register the common setup method for modloading
+        // Enregistrer la méthode de configuration commune pour le modloading
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        // Register client setup code
+        // Enregistrer le code de configuration client
         modEventBus.addListener(this::doClientStuff);
 
-        // Register ourselves for server and other game events we are interested in
+        // S'enregistrer pour les événements du serveur et autres événements de jeu
         MinecraftForge.EVENT_BUS.register(this);
 
-        // Register config
+        // Enregistrer la configuration
         CoordinatesConfig.loadConfig(CoordinatesConfig.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve("mycoordinatesmod.toml"));
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        // Register common setup code
+        // Enregistrer le code de configuration commune
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        // Register client-side only code here, like keybindings
-        toggleKeyBinding = new KeyBinding("Toggle Coordinates Showing", GLFW.GLFW_KEY_T, "IamacatCoordinatesMod");
-        toggleKeyBinding2 = new KeyBinding("Toggle Coordinates Position", GLFW.GLFW_KEY_Y, "IamacatCoordinatesMod");
+        // Enregistrer le code client uniquement ici, comme les key mappings
+        toggleKeyBinding = new KeyMapping("key.coordinates.toggle", GLFW.GLFW_KEY_T, "key.categories.iamacatcoordinatesmod");
+        toggleKeyBinding2 = new KeyMapping("key.coordinates.position", GLFW.GLFW_KEY_Y, "key.categories.iamacatcoordinatesmod");
 
-        // Register key bindings with Forge
+        // Enregistrer les key mappings avec Forge
         ClientRegistry.registerKeyBinding(toggleKeyBinding);
         ClientRegistry.registerKeyBinding(toggleKeyBinding2);
 
-        // Register the event handler for rendering coordinates
+        // Enregistrer le gestionnaire d'événements pour l'affichage des coordonnées
         MinecraftForge.EVENT_BUS.register(new CoordinatesEventHandler());
     }
 
     private void loadComplete(final FMLLoadCompleteEvent event) {
-        // Some load complete code
+        // Code exécuté à la fin du chargement
     }
 }
