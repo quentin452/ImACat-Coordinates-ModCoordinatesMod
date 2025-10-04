@@ -60,7 +60,7 @@ public class CoordinatesEventHandler {
                 yCoord += isTop ? 10 : -10;
             }
             if (!CoordinatesConfig.disableFacing) {
-                char facing = getCardinalPoint(minecraft.thePlayer.rotationYaw);
+                String facing = getCardinalPoint(minecraft.thePlayer.rotationYaw);
                 fontRenderer.drawString("Facing: " + facing, xCoord, yCoord, 0xFFFFFF);
                 yCoord += isTop ? 10 : -10;
             }
@@ -73,8 +73,9 @@ public class CoordinatesEventHandler {
 
     private final String[] cardinalPoints = { "S", "SW", "W", "NW", "N", "NE", "E", "SE" };
 
-    private char getCardinalPoint(float yaw) {
-        int index = Math.round(yaw / 45f) & 7;
-        return cardinalPoints[index].charAt(0);
+    private String getCardinalPoint(float yaw) {
+        yaw = (yaw % 360 + 360) % 360;
+        int index = (int) ((yaw + 22.5) / 45) % 8;
+        return cardinalPoints[index];
     }
 }
