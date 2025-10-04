@@ -6,9 +6,7 @@
 
 # Requirement
 
-[Unimixins](https://legacy.curseforge.com/minecraft/mc-mods/unimixins/files/4600285)
-
-[FalsePatternLib](https://legacy.curseforge.com/minecraft/mc-mods/fplib/files/4701057)
+None since V1.0 (only for 1.7.10)
 
 # Links to descriptions of my projects.
 
