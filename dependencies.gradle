@@ -56,16 +56,10 @@ dependencies {
     implementation("org.joml:joml:1.10.5")
 
     implementation "curse.maven:fplib-665627:4905393-deobf-sources-api"
-
-  //  runtimeOnly('com.github.GTNewHorizons:BuildCraft:7.1.36:dev')
-  //  transformedMod("com.github.GTNewHorizons:OpenComputers:1.10.0-GTNH:sources")
-
-    //implementation files("libs/Real.Kether-V1.9.5.2.jar")
-
 }
 
 jar {
     manifest {
-        attributes 'FMLAT': 'optimizationsandtweaks_at.cfg'
+        attributes 'FMLAT': 'mycoordinatesmods_at.cfg'
     }
 }
